@@ -60,7 +60,7 @@ usb_dev_handle* setup_libusb_access() {
 	// linux detach kernel driver
 	if ((returnCode = usb_detach_kernel_driver_np(colomboard_libusb, 0)) < 0) {
 		sprintf(cTmp, "Could not detach kernel driver: %d", returnCode);
-		writeLog(1, 0, cTmp);
+		writeLog(cTmp);
 	}
 #endif
 	if ((returnCode = usb_set_configuration(colomboard_libusb, 1)) < 0) {

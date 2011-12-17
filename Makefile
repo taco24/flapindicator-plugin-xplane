@@ -3,23 +3,22 @@ LIBPATH=
 WINDLLMAIN=
 COMPILERFLAGS=-Wall
 CC=gcc
-LIBRARIES=-lusb -lXPLM 
+LIBRARIES=-lusb 
+INCLUDE=-I./SDK/CHeaders/XPLM
 
 HOSTOS=$(shell uname | tr A-Z a-z)
 ifeq ($(HOSTOS),linux)
  LNFLAGS=-shared -rdynamic -nodefaultlibs -L.
  CFLAGS=$(COMPILERFLAGS) -DAPL=0 -DIBM=0 -DLIN=1
- LIBRARIES+=-lopengl -lglu -lpthread
+ LIBRARIES+=-lGL -lGLU -lpthread
 else
   HOSTOS=windows
   LNFLAGS=-m32 -Wl,-O1 -shared -L. -L./SDK/Libraries/Win/
   CFLAGS=$(COMPILERFLAGS) -DAPL=0 -DIBM=1 -DLIN=0
   LIBPATH+=-L".\SDK\Libraries\Win" -L".\lib"
-  LIBRARIES+=-lopengl32 -lglu32 -lpthreadGC1
+  LIBRARIES+=-lXPLM -lopengl32 -lglu32 -lpthreadGC1
+  INCLUDE+=-I./include
 endif
-
-INCLUDE=-I./include
-INCLUDE+=-I./SDK/CHeaders/XPLM
 
 
 all:
